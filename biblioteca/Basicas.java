@@ -270,4 +270,49 @@ public class Basicas {
 
         return inv;
     }
+
+    // matriz indetidad
+    public static int[][] generarMatrizIdentidad(int n) {
+        if (n <= 0) {
+            throw new IllegalArgumentException("El tamaño de la matriz debe ser mayor que 0.");
+        }
+        int[][] matriz = new int[n][n];
+        // Solo hace falta recorrer la diagonal principal
+        for (int i = 0; i < n; i++) {
+            matriz[i][i] = 1;
+        }
+        return matriz;
+    }
+
+    // matriz identidad con doubles
+    public static double[][] generarMatrizIdentidadDouble(int n) {
+        if (n <= 0) {
+            throw new IllegalArgumentException("El tamaño de la matriz debe ser mayor que 0.");
+        }
+        double[][] matriz = new double[n][n];
+        for (int i = 0; i < n; i++) {
+            matriz[i][i] = 1.0;
+        }
+        return matriz;
+    }
+
+    // Método que resuelve el sistema Ax = b usando la matriz inversa
+    public static double[] solveLinearSystem(int[][] A, int[] b) {
+        int rows = A.length;
+        int cols = A[0].length;
+        if (rows != cols) {
+            throw new IllegalArgumentException("La matriz A debe ser cuadrada para resolver el sistema.");
+        }
+        if (b.length != rows) {
+            throw new IllegalArgumentException("El vector b debe tener el mismo número de filas que la matriz A.");
+        }
+        double[][] A_inv = inversa(A);
+        double[] x = new double[rows];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                x[i] += A_inv[i][j] * b[j];
+            }
+        }
+        return x;
+    }
 }
